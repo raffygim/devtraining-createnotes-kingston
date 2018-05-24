@@ -5,7 +5,14 @@
         <client_script><![CDATA[function($rootScope,$scope) {
 	/* widget controller */
 	var c = this;
+	
+	// Use a position indicator to know which record to update
+	c.notePos = 0;
+	
 	c.selectItem = function(idx) {
+		//Set the position indicator to the index value passed in on select
+		c.notePos = idx;
+		
 		var id = c.data.notes[idx].sys_id;
 		console.log('Note ID: ' + id);
 		$rootScope.noteID = id;
@@ -13,8 +20,11 @@
 	}
 	
 	$rootScope.$on('updatedNote', function(event, data) {
-		console.log('Listener caught updated Note: ' + $rootScope.noteID);
-
+		console.log("updateTitle event received: " + event);
+		console.log(data);
+		c.data.notes[c.notePos].title = data.title;
+		c.data.notes[c.notePos].note = data.note;
+     
 		//c.data.title = r.data.note.title;
 		//c.data.note = r.data.note.note;
 		//c.data.noteID = r.data.note.sys_id;
@@ -63,14 +73,14 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-05-23 20:23:02</sys_created_on>
         <sys_id>fae2bfb4dbd21300c193f11ebf9619f3</sys_id>
-        <sys_mod_count>7</sys_mod_count>
+        <sys_mod_count>8</sys_mod_count>
         <sys_name>Notes List</sys_name>
         <sys_package display_value="CreateNotes" source="x_snc_createnotes">df5fd9a5090232007f44e1046c8ff69f</sys_package>
         <sys_policy/>
         <sys_scope display_value="CreateNotes">df5fd9a5090232007f44e1046c8ff69f</sys_scope>
         <sys_update_name>sp_widget_fae2bfb4dbd21300c193f11ebf9619f3</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-05-24 20:08:54</sys_updated_on>
+        <sys_updated_on>2018-05-24 21:11:50</sys_updated_on>
         <template><![CDATA[<div class="panel panel-default">
 	  <div class="panel-heading clearfix">
 	    <h3 class="panel-title pull-left">

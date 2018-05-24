@@ -32,9 +32,9 @@
 			console.log('callBack from updateNote action');
 			console.log(r);
 			
-			var id = c.data.noteID;
-			$rootScope.noteID = id;
-			$rootScope.$emit('updatedNote', id);
+			if (updateType == 'title' || updateType == 'body'){
+				$rootScope.$emit('updatedNote', r.data);	
+			}
 		});
 	}
 }]]></client_script>
@@ -64,7 +64,15 @@
 				} else if (input.action == 'updateNote') {
 					note.title = input.noteTitle;
 					note.note = input.noteBody;
+					
+					// update a note on DB
 					note.update();
+				
+					// Need to update the data object with the new title
+					// and first 20 characters of the note (do not want to write huge
+					// strings to the Notes List widget)
+					data.title = note.getValue('title');
+					data.note = note.getValue('note').slice(0,20);					
 				}
 			}
 		}
@@ -74,14 +82,14 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-05-23 20:37:37</sys_created_on>
         <sys_id>d846fbb4dbd21300c193f11ebf961949</sys_id>
-        <sys_mod_count>11</sys_mod_count>
+        <sys_mod_count>12</sys_mod_count>
         <sys_name>Notes Body</sys_name>
         <sys_package display_value="CreateNotes" source="x_snc_createnotes">df5fd9a5090232007f44e1046c8ff69f</sys_package>
         <sys_policy/>
         <sys_scope display_value="CreateNotes">df5fd9a5090232007f44e1046c8ff69f</sys_scope>
         <sys_update_name>sp_widget_d846fbb4dbd21300c193f11ebf961949</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-05-24 20:10:19</sys_updated_on>
+        <sys_updated_on>2018-05-24 21:08:40</sys_updated_on>
         <template><![CDATA[<div class="panel panel-default" ng-show="c.data.noteID">
   <div class="panel-heading clearfix">
     <div class="row">
